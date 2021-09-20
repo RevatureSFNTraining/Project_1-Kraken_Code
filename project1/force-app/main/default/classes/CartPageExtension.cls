@@ -13,10 +13,10 @@ public class CartPageExtension {
         // then assign to local property.
         String potionId = ApexPages.currentPage().getParameters().get('potId');
         System.debug('potionId: ' + potionId);
-        string query = 'SELECT Id, Name, Total_Price__c ' +
+        String query = 'SELECT Id, Name, Total_Price__c ' +
         'FROM Potion__c';
         if (potionId != null) {
-            query += ' WHERE Id = \'' + potionId + '\'';
+            query += ' WHERE Id = :potionId';
         }
         List<Potion__c> potions = Database.query(query);
         for(Potion__c pot : potions){
@@ -42,12 +42,15 @@ public class CartPageExtension {
             insert potOrder;
 
             // If no errors then display pop up and calculate total price
-            // wanted to use object field but did not work as expected
+            // Wanted to use object field but did not work as expected
             displayPopup = true;
             orderTotalPrice = potion.Total_Price__c * potOrder.Number_of_Potions__c;
         } catch(Exception e) {
             // Automatic error handling and placement
-            ApexPages.addMessage(new ApexPages.Message(ApexPages.severity.ERROR, e.getMessage()));
+
+            // Useful for when things like the new order notification process builder break
+            // unexpilcably while using the experience cloud site.
+            // ApexPages.addMessage(new ApexPages.Message(ApexPages.severity.ERROR, e.getMessage()));
         }
     }
 }
