@@ -1,0 +1,54 @@
+@isTest
+public class AddEditDeleteAccountControllerTest {
+    
+    
+    @isTest 
+    public static void testAddAccount() {
+        Test.startTest();
+        AddEditDeleteAccountController aacontroller = new AddEditDeleteAccountController();
+        aacontroller.addAccount();
+        list<Account> accountList = aacontroller.accountList;
+        Test.stopTest();
+        system.assert(accountList.size() == 2);
+    }
+    
+    @isTest  
+    public  static  void testSaveAccount() 
+    {
+        Test.StartTest(); 
+        AddEditDeleteAccountController aacontroller = new AddEditDeleteAccountController();
+        aacontroller.accountList[0].Name = 'testa';
+        aacontroller.saveAccount(); 
+        Test.StopTest();
+        Account[] act = [SELECT id, Name FROM account WHERE name = 'testa'];
+        system.assert(act.size() == 0);
+    }
+    
+    @isTest
+    public static void testDeleteRecord() {
+        Account a = new Account(name='test');
+        insert a;
+        Test.startTest();
+        AddEditDeleteAccountController aacontroller = new AddEditDeleteAccountController();
+        list<account> Accs = aacontroller.getUserAccounts();
+        Account acc=[SELECT Id,Name from Account where id =: a.Id];
+        aacontroller.deleteAccount();
+        Test.stopTest();
+        System.assertEquals(a.Name, '');
+    }
+    
+    
+    @isTest
+    public static void testSaveRecord() {
+        Account a = new Account(name='test');
+        insert a;
+        Test.startTest();
+        AddEditDeleteAccountController aacontroller = new AddEditDeleteAccountController();
+        list<account> Accs = aacontroller.getUserAccounts();
+        aacontroller.editAccount = a.Id;
+        a.Name='tests';
+        aacontroller.saveRecord();
+        Test.stopTest();
+        System.assertEquals(a.Name, 'tests');
+    }
+}
