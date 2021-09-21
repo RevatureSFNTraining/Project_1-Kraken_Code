@@ -1,11 +1,11 @@
 public class FAQTriggerHandler {
     public static List<FAQ__c> checkExistingFAQs(List<FAQ__c> newFAQs) {
-        Set<String> newFAQSet = new Set<String>();
+        Map<String, String> newFAQMap = new Map<String, String>();
 
-        //Adds new FAQ record to a new set of FAQ record
+        //Adds new FAQ record to a new map of FAQ record
         for(FAQ__c newFAQ : newFAQs) {
             if(newFAQ.Question__c != null && newFAQ.Answer__c != null ) {
-                newFAQSet.add(newFAQ.Question__c);
+                newFAQMap.put(newFAQ.Question__c,newFAQ.Answer__c);
             }
         }
         //Creates list of already existing FAQ records
@@ -15,10 +15,9 @@ public class FAQTriggerHandler {
         }
         //Checks each index in the list of existing FAQs to see if they have matching questions.
         for(FAQ__c newFAQ: newFAQs) {
-            for(Integer i = 0;i < newFAQs.size();i++) {
-                if(newFAQ.Question__c == existingFAQList[i].Question__c) {
+            FAQ__c duplicateFAQ = new FAQ__c(Question__c=newFAQMap.get(newFAQ.Question__c));
+            if(newFAQ.Question__c == duplicateFAQ.Question__c) {
                 newFAQ.addError('ERROR: This question already exists as an FAQ.');
-                }
             }
         }
         return newFAQs;
