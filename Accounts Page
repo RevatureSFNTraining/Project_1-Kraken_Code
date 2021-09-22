@@ -1,18 +1,17 @@
 <apex:page Controller="AddEditDeleteAccountController" standardStylesheets="false" lightningStylesheets="true" applyHtmlTag="false" showHeader="false">
     <style>
-       
-       #page {
-    
-    width: 80vw;
+        .atable table {
+    table-layout: fixed;
+    width: 80%; 
         
 }
-  
+        
     .atable th{
         background: linear-gradient(to top, #15dbc5, #dba6ee);
         font-size: 18px;
         font-family: 'Cinzel Decorative', 'Times New Roman';
         text-decoration: underline;
-         font-weight: bold !important;
+        font-weight: bold !important;
         }
         
     .atable td{
@@ -20,28 +19,33 @@
         font-size: 16px;
         font-family: 'Charm', 'Helvetica';
         display: table-cell;
-  		padding: 2px 15px 2px 15px;
- 		white-space: nowrap;
-  		text-overflow: ellipsis;
-  		overflow: hidden;
-  		width: auto;
-  		max-width: 1px;
-        text-align: center;
+        padding: 2px 15px 2px 15px;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        width: auto;
+        max-width: 150px;
         }
         
-    .b{
-        background: linear-gradient(to top, #15dbc5, #dba6ee);   
-        text-align: center;
+    .addacc{
+        background: linear-gradient(to top, #15dbc5, #dba6ee);        
         }
-    
+        
+    .button{
+		color:white !important;
+		background:#6f54fc !important;
+        font-size: 24px !important;
+        font-family: 'Charm', 'Helvetica' !important;        
+}
          .buttonb{
 		color:white !important;
 		background:#6f54fc !important;
         font-size: 16px !important;
         font-family: 'Charm', 'Helvetica' !important; 
         
+        
 }
-    
+     
     </style>
     <html>
      <head>
@@ -53,69 +57,92 @@
             <meta name="keywords" content="potion, potions, supply, kraken, witch, magic"/>
             <meta name="author" content="Kraken Code"/>
             <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-            <link rel="SHORTCUT ICON" href="{!URLFOR($Resource.krakenIco)}"/>
+             <link rel="SHORTCUT ICON" href="{!URLFOR($Resource.krakenIco)}"/>
         </head>
          <body class='slds-scope'>
-            <c:MenuHeader title="Add Accounts Page"/>
+            <c:MenuHeader title="Accounts Page"/>
             <div class = 'container'>
-	<apex:form id='page'>
-	<apex:pageBlock >
-		<apex:pageBlockTable value="{!accountList}" var="at" styleClass="atable">
-			<apex:column headerValue="Account Name">
-                    <apex:inputField value="{!at.Name}"/>
+    <apex:form >
+        <div class="addacc">
+            <apex:commandButton value="Add Accounts" action="{!URLFOR($Page.addAccountsPage)}"  styleClass="button"/>
+        </div>
+        <div>
+        <apex:pageBlock id="blockId">
+            <apex:pageblocktable value="{!userAccounts}" var="acct" styleClass="atable">
+                <apex:column headerValue="Account Name">
+                    <apex:inputField value="{!acct.name}" rendered="{!editAccount  == acct.id}"/>
+                    <apex:outputField value="{!acct.name}"  rendered="{!!(editAccount  == acct.id)}"/>
                 </apex:column>
-                <apex:column headerValue="Phone Number">
-                    <apex:inputField value="{!at.Phone}"/>
+                <apex:column headerValue="Phone">
+                    <apex:inputField value="{!acct.phone}"  rendered="{!editAccount  == acct.id}"/>
+                    <apex:outputField value="{!acct.phone}"   rendered="{!!(editAccount  == acct.id)}"/>             
                 </apex:column>
                 <apex:column >
                     <apex:facet name="header">
                         Billing Street<br/>Shipping Street
                     </apex:facet>
-                    <apex:inputField value="{!at.BillingStreet}"/>
+                    <apex:inputField value="{!acct.BillingStreet}"  rendered="{!editAccount  == acct.id}"/>
+                    <apex:outputField value="{!acct.BillingStreet}"   rendered="{!!(editAccount  == acct.id)}"/>
                     <br/>
-                    <apex:inputField value="{!at.ShippingStreet}"/>
+                    <apex:inputField value="{!acct.ShippingStreet}"  rendered="{!editAccount  == acct.id}"/>
+                    <apex:outputField value="{!acct.ShippingStreet}"   rendered="{!!(editAccount  == acct.id)}"/> 
                 </apex:column>
                 <apex:column >
                     <apex:facet name="header">
                         Billing City<br/>Shipping City
                     </apex:facet>
-                    <apex:inputField value="{!at.BillingCity}"/>
+                    <apex:inputField value="{!acct.BillingCity}"  rendered="{!editAccount  == acct.id}"/>
+                    <apex:outputField value="{!acct.BillingCity}"   rendered="{!!(editAccount  == acct.id)}"/> 
                     <br/>
-                    <apex:inputField value="{!at.ShippingCity}"/>
+                    <apex:inputField value="{!acct.ShippingCity}"  rendered="{!editAccount  == acct.id}"/>
+                    <apex:outputField value="{!acct.ShippingCity}"   rendered="{!!(editAccount  == acct.id)}"/>             
                 </apex:column>
                 <apex:column >
                     <apex:facet name="header">
                         Billing State<br/>Shipping State
                     </apex:facet>
-                    <apex:inputField value="{!at.BillingState}"/>
+                    <apex:inputField value="{!acct.BillingState}"  rendered="{!editAccount  == acct.id}"/>
+                    <apex:outputField value="{!acct.BillingState}"   rendered="{!!(editAccount  == acct.id)}"/>  
                     <br/>
-                    <apex:inputField value="{!at.ShippingState}"/>
+                    <apex:inputField value="{!acct.ShippingState}"  rendered="{!editAccount  == acct.id}"/>
+                    <apex:outputField value="{!acct.ShippingState}"   rendered="{!!(editAccount  == acct.id)}"/> 
                 </apex:column>
                 <apex:column >
                     <apex:facet name="header">
                         Billing Postal Code<br/>Shipping Postal Code
                     </apex:facet>
-                    <apex:inputField value="{!at.BillingPostalCode}"/>
+                    <apex:inputField value="{!acct.BillingPostalCode}"  rendered="{!editAccount  == acct.id}"/>
+                    <apex:outputField value="{!acct.BillingPostalCode}"   rendered="{!!(editAccount  == acct.id)}"/> 
                     <br/>
-                    <apex:inputField value="{!at.ShippingPostalCode}"/>
+                    <apex:inputField value="{!acct.ShippingPostalCode}"  rendered="{!editAccount  == acct.id}"/>
+                    <apex:outputField value="{!acct.ShippingPostalCode}"   rendered="{!!(editAccount  == acct.id)}"/>             
                 </apex:column>
                 <apex:column >
                     <apex:facet name="header">
                         Billing Country<br/>Shipping Country
                     </apex:facet>
-                    <apex:inputField value="{!at.BillingCountry}"/>
+                    <apex:inputField value="{!acct.BillingCountry}"  rendered="{!editAccount  == acct.id}"/>
+                    <apex:outputField value="{!acct.BillingCountry}"   rendered="{!!(editAccount  == acct.id)}"/> 
                     <br/>
-                    <apex:inputField value="{!at.ShippingCountry}"/>
+                    <apex:inputField value="{!acct.ShippingCountry}"  rendered="{!editAccount  == acct.id}"/>
+                    <apex:outputField value="{!acct.ShippingCountry}"   rendered="{!!(editAccount  == acct.id)}"/>             
                 </apex:column>
-		</apex:pageBlockTable>
-		<div class='b'>
-			<apex:commandButton value="Add Accounts Row" action="{!addAccount}" styleClass="buttonb"/>
-			<apex:commandButton value="Save Accounts" action="{!saveAccount}" styleClass="buttonb"/>
-            <apex:commandButton value="Go Back" action="{!URLFOR($Page.accountsPage)}" immediate="true" styleClass="buttonb"/>
+                <apex:column >
+                    <apex:commandbutton value="Edit" rerender="blockId" rendered="{!!(editAccount  == acct.id)}" styleClass="buttonb">
+                        <apex:param assignTo="{!editAccount }" value="{!acct.id}" name="ittobeedited"/>
+                    </apex:commandbutton>
+                    <apex:commandButton value="Save" action="{!saveRecord}" reRender="blockId" rendered="{!editAccount  == acct.id}" styleClass="buttonb"/>
+                </apex:column>
+                <apex:column >
+                   <apex:commandbutton value="Delete" action="{!deleteAccount}" rerender="blockId" styleClass="buttonb">
+                        <apex:param assignTo="{!accountId}" value="{!acct.id}" name="accountId"/>
+                    </apex:commandbutton>
+                </apex:column>
+            </apex:pageblocktable>
+        </apex:pageBlock>   
         </div>
-	</apex:pageBlock>
-	</apex:form>
-                </div>
+    </apex:form>
+                 </div>
        </body>
     </html>
 </apex:page>
