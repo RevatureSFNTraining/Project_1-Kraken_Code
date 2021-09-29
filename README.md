@@ -37,12 +37,12 @@ Once in your ORG, be sure to have myDomain and digital experiences enabled. You 
 
 ## Contributors
 
-https://github.com/e-m-wilson
-https://github.com/Camronmiller
-https://github.com/alwaysasking
-https://github.com/colinpoirier
-https://github.com/Matt02040
-https://github.com/vesich
+* https://github.com/e-m-wilson
+* https://github.com/Camronmiller
+* https://github.com/alwaysasking
+* https://github.com/colinpoirier
+* https://github.com/Matt02040
+* https://github.com/vesich
 
 ## License
 
