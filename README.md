@@ -43,6 +43,7 @@ Once in your ORG, be sure to have myDomain and digital experiences enabled. You 
 * https://github.com/colinpoirier
 * https://github.com/Matt02040
 * https://github.com/vesich
+* https://github.com/chrisatd1
 
 ## License
 
